@@ -3,6 +3,7 @@ const path = require("path")
 const fs = require("fs-extra")
 const lodash = require("lodash")
 const packageJson = require("../package.json")
+const { env } = require("process")
 
 const helpers = {
     filesInDirectory(dir, recursive = true, acc = []) {
@@ -74,6 +75,7 @@ const envVars = helpers.getEnvVars()
 
 const rootdir = envVars.rootdir ? path.resolve(process.cwd(), envVars.rootdir) : process.cwd()
 const outputdir = path.resolve(process.cwd(), envVars.outputdir || "flatten-directory-output")
+const seperator = envVars.seperator ? envVars.seperator : '#'
 const copy = !envVars.cut
 
 const allFiles = helpers.filesInDirectory(rootdir, true)
@@ -83,7 +85,7 @@ helpers.log(`Processing ${allFiles.length} files...`)
 helpers.log(`--------------------------------------`)
 
 allFiles.forEach((orig) => {
-    const destFileName = orig.slice(rootdir.length).split(path.sep).filter(Boolean).join("-").split(" ").join("-")
+    const destFileName = orig.slice(rootdir.length).split(path.sep).filter(Boolean).join(seperator).split(" ").join(seperator)
     const dest = path.resolve(outputdir, destFileName)
     helpers.log(`${orig} -> ${dest}`)
     if (copy) {

@@ -79,7 +79,7 @@ const seperator = envVars.seperator ? envVars.seperator : '#'
 const copy = !envVars.cut
 
 const allFiles = helpers.filesInDirectory(rootdir, true)
-
+// URL supported chars ; , / ? : @ & = + $ - _ . ! ~ * ' 
 helpers.log(`Running on dir: ${rootdir}`)
 helpers.log(`Processing ${allFiles.length} files...`)
 helpers.log(`--------------------------------------`)
